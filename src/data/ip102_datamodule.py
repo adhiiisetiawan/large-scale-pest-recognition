@@ -38,7 +38,7 @@ class IP102DataModule(LightningDataModule):
 
     def __init__(
         self,
-        data_dir: str = "/home/adhi/large-scale-pest-classification/data/ip102_v1.1/",
+        data_dir: str = "data/ip102_v1.1/",
         train_val_test_split: Tuple[int, int, int] = (55_000, 5_000, 10_000),
         batch_size: int = 64,
         num_workers: int = 0,
@@ -63,7 +63,7 @@ class IP102DataModule(LightningDataModule):
 
     @property
     def num_classes(self):
-        return 10
+        return 102
 
     def prepare_data(self):
         """Prepares the dataset by initializing and managing the dataset, creating necessary folders,
@@ -75,7 +75,7 @@ class IP102DataModule(LightningDataModule):
         Returns:
             None
         """
-        
+
         # Directory path for the dataset
         dataset_path = self.data_dir
 

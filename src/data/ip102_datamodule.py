@@ -5,8 +5,9 @@ import torch
 from components.dataset_manager import DatasetManager
 from lightning import LightningDataModule
 from torch.utils.data import ConcatDataset, DataLoader, Dataset, random_split
-from torchvision.datasets import MNIST
-from torchvision.transforms import transforms
+from torchvision import datasets, transforms
+from torch.utils.data import DataLoader
+# from torchvision.transforms import transforms
 
 
 class IP102DataModule(LightningDataModule):
@@ -38,7 +39,7 @@ class IP102DataModule(LightningDataModule):
 
     def __init__(
         self,
-        data_dir: str = "data/ip102_v1.1/",
+        data_dir: str = "/home/adhi/large-scale-pest-classification/data/ip102_v1.1/",
         train_val_test_split: Tuple[int, int, int] = (55_000, 5_000, 10_000),
         batch_size: int = 64,
         num_workers: int = 0,
@@ -62,9 +63,12 @@ class IP102DataModule(LightningDataModule):
         ])
 
         # data transformations
-        self.transforms = transforms.Compose(
-            [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
-        )
+        self.transforms = transforms.Compose([
+            transforms.Resize(230),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        ])
 
         self.data_train: Optional[Dataset] = None
         self.data_val: Optional[Dataset] = None
@@ -114,15 +118,9 @@ class IP102DataModule(LightningDataModule):
         careful not to execute things like random split twice!
         """
         # load and split datasets only if not loaded already
-        if not self.data_train and not self.data_val and not self.data_test:
-            trainset = MNIST(self.hparams.data_dir, train=True, transform=self.transforms)
-            testset = MNIST(self.hparams.data_dir, train=False, transform=self.transforms)
-            dataset = ConcatDataset(datasets=[trainset, testset])
-            self.data_train, self.data_val, self.data_test = random_split(
-                dataset=dataset,
-                lengths=self.hparams.train_val_test_split,
-                generator=torch.Generator().manual_seed(42),
-            )
+        self.data_train = datasets.ImageFolder('/home/adhi/large-scale-pest-classification/data/ip102_v1.1/images/train', transform=self.augmentation)
+        self.data_val = datasets.ImageFolder('/home/adhi/large-scale-pest-classification/data/ip102_v1.1/images/val', transform=self.transforms)
+        self.data_test = datasets.ImageFolder('/home/adhi/large-scale-pest-classification/data/ip102_v1.1/images/test', transform=self.transforms)
 
     def train_dataloader(self):
         return DataLoader(

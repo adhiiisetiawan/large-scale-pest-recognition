@@ -1,46 +1,45 @@
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Optional
 
 import os
-import torch
 from components.dataset_manager import DatasetManager
 from lightning import LightningDataModule
-from torch.utils.data import ConcatDataset, DataLoader, Dataset, random_split
+from torch.utils.data import DataLoader, Dataset
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
-# from torchvision.transforms import transforms
 
 
 class IP102DataModule(LightningDataModule):
-    """Example of LightningDataModule for MNIST dataset.
+    """Data module for the IP102 dataset.
 
-    A DataModule implements 6 key methods:
-        def prepare_data(self):
-            # things to do on 1 GPU/TPU (not on every GPU/TPU in DDP)
-            # download data, pre-process, split, save to disk, etc...
-        def setup(self, stage):
-            # things to do on every process in DDP
-            # load data, set variables, etc...
-        def train_dataloader(self):
-            # return train dataloader
-        def val_dataloader(self):
-            # return validation dataloader
-        def test_dataloader(self):
-            # return test dataloader
-        def teardown(self):
-            # called on every process in DDP
-            # clean up after fit or test
+    This LightningDataModule provides functionality to prepare, load, and transform the IP102 dataset
+    for training, validation, and testing purposes. It handles dataset preparation, including initializing
+    and managing the dataset, creating necessary folders, loading class labels, creating subfolders for each class,
+    and moving files to their respective subfolders.
 
-    This allows you to share a full dataset without explaining how to download,
-    split, transform and process the data.
+    Args:
+        data_dir (str): The directory path to the IP102 dataset. Default is "/home/adhi/large-scale-pest-classification/data/ip102_v1.1/".
+        batch_size (int): The batch size to use for data loaders. Default is 64.
+        num_workers (int): The number of workers for data loading. Default is 0.
+        pin_memory (bool): If True, pin memory for faster data transfer to the GPU. Default is False.
 
-    Read the docs:
-        https://lightning.ai/docs/pytorch/latest/data/datamodule.html
+    Attributes:
+        num_classes (int): The number of classes in the IP102 dataset.
+
+    Methods:
+        prepare_data(): Prepares the dataset by initializing and managing the dataset, creating necessary folders,
+            loading class labels, creating subfolders for each class, and moving files to their respective subfolders.
+        setup(): Loads and splits the datasets if they are not already loaded.
+        train_dataloader(): Returns a DataLoader for the training dataset.
+        val_dataloader(): Returns a DataLoader for the validation dataset.
+        test_dataloader(): Returns a DataLoader for the testing dataset.
+        teardown(stage: Optional[str] = None): Cleans up after fit or test.
+        state_dict(): Returns extra things to save to checkpoint.
+        load_state_dict(state_dict: Dict[str, Any]): Performs actions when loading checkpoint.
     """
 
     def __init__(
         self,
         data_dir: str = "/home/adhi/large-scale-pest-classification/data/ip102_v1.1/",
-        train_val_test_split: Tuple[int, int, int] = (55_000, 5_000, 10_000),
         batch_size: int = 64,
         num_workers: int = 0,
         pin_memory: bool = False,

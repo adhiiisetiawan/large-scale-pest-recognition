@@ -1,13 +1,15 @@
 from typing import Any, Dict, Optional, Tuple
 
+import os
 import torch
+from components.dataset_manager import DatasetManager
 from lightning import LightningDataModule
 from torch.utils.data import ConcatDataset, DataLoader, Dataset, random_split
 from torchvision.datasets import MNIST
 from torchvision.transforms import transforms
 
 
-class MNISTDataModule(LightningDataModule):
+class IP102DataModule(LightningDataModule):
     """Example of LightningDataModule for MNIST dataset.
 
     A DataModule implements 6 key methods:
@@ -36,7 +38,7 @@ class MNISTDataModule(LightningDataModule):
 
     def __init__(
         self,
-        data_dir: str = "data/",
+        data_dir: str = "data/ip102_v1.1/",
         train_val_test_split: Tuple[int, int, int] = (55_000, 5_000, 10_000),
         batch_size: int = 64,
         num_workers: int = 0,
@@ -47,6 +49,8 @@ class MNISTDataModule(LightningDataModule):
         # this line allows to access init params with 'self.hparams' attribute
         # also ensures init params will be stored in ckpt
         self.save_hyperparameters(logger=False)
+
+        self.data_dir = data_dir
 
         # data transformations
         self.transforms = transforms.Compose(
@@ -66,8 +70,27 @@ class MNISTDataModule(LightningDataModule):
 
         Do not use it to assign state (self.x = y).
         """
-        MNIST(self.hparams.data_dir, train=True, download=True)
-        MNIST(self.hparams.data_dir, train=False, download=True)
+        # Directory path for the dataset
+        dataset_path = self.data_dir
+
+        # Initialize and manage the dataset
+        dataset_manager = DatasetManager(dataset_path)
+
+        # Create necessary folders
+        dataset_manager.create_folders()
+
+        # Load class labels
+        classes_file = os.path.join(dataset_path, "classes.txt")
+        dataset_manager.load_class_labels(classes_file)
+
+        # Create subfolders for each class
+        dataset_manager.create_class_subfolders()
+
+        # Move files to respective subfolders
+        dataset_manager.move_files("train.txt")
+        dataset_manager.move_files("test.txt")
+        dataset_manager.move_files("val.txt")
+
 
     def setup(self, stage: Optional[str] = None):
         """Load data. Set variables: `self.data_train`, `self.data_val`, `self.data_test`.
@@ -127,4 +150,4 @@ class MNISTDataModule(LightningDataModule):
 
 
 if __name__ == "__main__":
-    _ = MNISTDataModule()
+    _ = IP102DataModule()

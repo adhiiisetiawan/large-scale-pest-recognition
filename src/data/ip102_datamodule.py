@@ -111,18 +111,30 @@ class IP102DataModule(LightningDataModule):
         dataset_manager.move_files("val.txt")
 
 
-    def setup(self, stage: Optional[str] = None):
-        """Load data. Set variables: `self.data_train`, `self.data_val`, `self.data_test`.
+    def setup(self):
+        """Loads and splits the datasets if they are not already loaded.
 
-        This method is called by lightning with both `trainer.fit()` and `trainer.test()`, so be
+        This method is called by Lightning with both `trainer.fit()` and `trainer.test()`, so be
         careful not to execute things like random split twice!
+
+        Args:
+            self: The instance of the class.
+
+        Returns:
+            None
         """
+
         # load and split datasets only if not loaded already
         self.data_train = datasets.ImageFolder('/home/adhi/large-scale-pest-classification/data/ip102_v1.1/images/train', transform=self.augmentation)
         self.data_val = datasets.ImageFolder('/home/adhi/large-scale-pest-classification/data/ip102_v1.1/images/val', transform=self.transforms)
         self.data_test = datasets.ImageFolder('/home/adhi/large-scale-pest-classification/data/ip102_v1.1/images/test', transform=self.transforms)
 
     def train_dataloader(self):
+        """Returns a DataLoader for the training dataset.
+
+        Returns:
+            DataLoader: The DataLoader object for the training dataset.
+        """
         return DataLoader(
             dataset=self.data_train,
             batch_size=self.hparams.batch_size,
@@ -132,6 +144,11 @@ class IP102DataModule(LightningDataModule):
         )
 
     def val_dataloader(self):
+        """Returns a DataLoader for the validation dataset.
+
+        Returns:
+            DataLoader: The DataLoader object for the validation dataset.
+        """
         return DataLoader(
             dataset=self.data_val,
             batch_size=self.hparams.batch_size,
@@ -141,6 +158,11 @@ class IP102DataModule(LightningDataModule):
         )
 
     def test_dataloader(self):
+        """Returns a DataLoader for the testing dataset.
+
+        Returns:
+            DataLoader: The DataLoader object for the testing dataset.
+        """
         return DataLoader(
             dataset=self.data_test,
             batch_size=self.hparams.batch_size,

@@ -52,6 +52,15 @@ class IP102DataModule(LightningDataModule):
 
         self.data_dir = data_dir
 
+        # data augmentation
+        self.augmentation = transforms.Compose([
+            transforms.RandomRotation(10),
+            transforms.RandomResizedCrop(224, scale=(0.7, 1)),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])                           
+        ])
+
         # data transformations
         self.transforms = transforms.Compose(
             [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]

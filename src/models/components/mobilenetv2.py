@@ -1,4 +1,5 @@
 from torch.utils.model_zoo import load_url as load_state_dict_from_url
+from torch import nn
 
 
 __all__ = ['MobileNetV2', 'mobilenet_v2']
@@ -141,3 +142,11 @@ class MobileNetV2(nn.Module):
 
     def forward(self, x):
         return self._forward_impl(x)
+    
+def mobilenetV2(pretrained=False, progress=True, **kwargs):
+    model = MobileNetV2(**kwargs)
+    if pretrained:
+        state_dict = load_state_dict_from_url(model_urls['mobilenet_v2'],
+                                              progress=progress)
+        model.load_state_dict(state_dict)
+    return model

@@ -1,4 +1,4 @@
-_target_: src.models.mnist_module.MNISTLitModule
+_target_: src.models.insect_pest_module.InsectPestLitModule
 
 optimizer:
   _target_: torch.optim.Adam

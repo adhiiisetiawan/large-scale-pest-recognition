@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional
 
 import os
-from components.dataset_manager import DatasetManager
+# from components.dataset_manager import DatasetManager
 from lightning import LightningDataModule
 from torch.utils.data import DataLoader, Dataset
 from torchvision import datasets, transforms
@@ -39,7 +39,7 @@ class IP102DataModule(LightningDataModule):
 
     def __init__(
         self,
-        data_dir: str = "/home/adhi/large-scale-pest-classification/data/ip102_v1.1/",
+        data_dir: str = "data/ip102_v1.1/",
         batch_size: int = 64,
         num_workers: int = 0,
         pin_memory: bool = False,
@@ -77,37 +77,37 @@ class IP102DataModule(LightningDataModule):
     def num_classes(self):
         return 102
 
-    def prepare_data(self):
-        """Prepares the dataset by initializing and managing the dataset, creating necessary folders,
-        loading class labels, creating subfolders for each class, and moving files to their respective subfolders.
+    # def prepare_data(self):
+    #     """Prepares the dataset by initializing and managing the dataset, creating necessary folders,
+    #     loading class labels, creating subfolders for each class, and moving files to their respective subfolders.
 
-        Args:
-            self: The instance of the class.
+    #     Args:
+    #         self: The instance of the class.
 
-        Returns:
-            None
-        """
+    #     Returns:
+    #         None
+    #     """
 
-        # Directory path for the dataset
-        dataset_path = self.data_dir
+    #     # Directory path for the dataset
+    #     dataset_path = self.data_dir
 
-        # Initialize and manage the dataset
-        dataset_manager = DatasetManager(dataset_path)
+    #     # Initialize and manage the dataset
+    #     dataset_manager = DatasetManager(dataset_path)
 
-        # Create necessary folders
-        dataset_manager.create_folders()
+    #     # Create necessary folders
+    #     dataset_manager.create_folders()
 
-        # Load class labels
-        classes_file = os.path.join(dataset_path, "classes.txt")
-        dataset_manager.load_class_labels(classes_file)
+    #     # Load class labels
+    #     classes_file = os.path.join(dataset_path, "classes.txt")
+    #     dataset_manager.load_class_labels(classes_file)
 
-        # Create subfolders for each class
-        dataset_manager.create_class_subfolders()
+    #     # Create subfolders for each class
+    #     dataset_manager.create_class_subfolders()
 
-        # Move files to respective subfolders
-        dataset_manager.move_files("train.txt")
-        dataset_manager.move_files("test.txt")
-        dataset_manager.move_files("val.txt")
+    #     # Move files to respective subfolders
+    #     dataset_manager.move_files("train.txt")
+    #     dataset_manager.move_files("test.txt")
+    #     dataset_manager.move_files("val.txt")
 
 
     def setup(self):
@@ -124,9 +124,9 @@ class IP102DataModule(LightningDataModule):
         """
 
         # load and split datasets only if not loaded already
-        self.data_train = datasets.ImageFolder('/home/adhi/large-scale-pest-classification/data/ip102_v1.1/images/train', transform=self.augmentation)
-        self.data_val = datasets.ImageFolder('/home/adhi/large-scale-pest-classification/data/ip102_v1.1/images/val', transform=self.transforms)
-        self.data_test = datasets.ImageFolder('/home/adhi/large-scale-pest-classification/data/ip102_v1.1/images/test', transform=self.transforms)
+        self.data_train = datasets.ImageFolder('data/ip102_v1.1/images/train', transform=self.augmentation)
+        self.data_val = datasets.ImageFolder('data/ip102_v1.1/images/val', transform=self.transforms)
+        self.data_test = datasets.ImageFolder('data/ip102_v1.1/images/test', transform=self.transforms)
 
     def train_dataloader(self):
         """Returns a DataLoader for the training dataset.

@@ -1,4 +1,4 @@
-from mobilenetv2 import mobilenetV2
+from .mobilenetv2 import mobilenetV2
 from torch import nn
 
 

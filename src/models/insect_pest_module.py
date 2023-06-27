@@ -1,6 +1,8 @@
 from typing import Any
 
 import torch
+from .components.cutmix import cutmix
+from .components.sparse_regularization import sparse_loss
 from lightning import LightningModule
 from torchmetrics import MaxMetric, MeanMetric
 from torchmetrics.classification.accuracy import Accuracy
@@ -62,15 +64,24 @@ class InsectPestLitModule(LightningModule):
         self.val_acc.reset()
         self.val_acc_best.reset()
 
-    def model_step(self, batch: Any):
+    def model_step(self, batch: Any, apply_cutmix: bool = False):
         x, y = batch
-        logits = self.forward(x)
-        loss = self.criterion(logits, y)
+        if apply_cutmix:
+            x_cutmix, y_a, y_b, lam = cutmix(x, y, alpha=1.0)  # Apply CutMix
+            logits = self.forward(x_cutmix)
+            loss = lam * self.criterion(logits, y_a) + (1 - lam) * self.criterion(logits, y_b)  # CutMix loss
+        else:
+            logits = self.forward(x)
+            loss = self.criterion(logits, y)  # Original loss
+
         preds = torch.argmax(logits, dim=1)
         return loss, preds, y
 
     def training_step(self, batch: Any, batch_idx: int):
-        loss, preds, targets = self.model_step(batch)
+        loss, preds, targets = self.model_step(batch, apply_cutmix=True)
+
+        sparse_reg_loss = sparse_loss(self.net, batch[0])  # Sparse regularization loss
+        loss += 0.001 * sparse_reg_loss  # Add sparse regularization loss to the total loss
 
         # update and log metrics
         self.train_loss(loss)
@@ -85,7 +96,7 @@ class InsectPestLitModule(LightningModule):
         pass
 
     def validation_step(self, batch: Any, batch_idx: int):
-        loss, preds, targets = self.model_step(batch)
+        loss, preds, targets = self.model_step(batch, apply_cutmix=False)
 
         # update and log metrics
         self.val_loss(loss)

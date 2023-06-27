@@ -41,7 +41,7 @@ class IP102DataModule(LightningDataModule):
         self,
         data_dir: str = "data/ip102_v1.1/",
         batch_size: int = 64,
-        num_workers: int = 0,
+        num_workers: int = 16,
         pin_memory: bool = False,
     ):
         super().__init__()
@@ -110,7 +110,7 @@ class IP102DataModule(LightningDataModule):
     #     dataset_manager.move_files("val.txt")
 
 
-    def setup(self):
+    def setup(self, stage=None):
         """Loads and splits the datasets if they are not already loaded.
 
         This method is called by Lightning with both `trainer.fit()` and `trainer.test()`, so be

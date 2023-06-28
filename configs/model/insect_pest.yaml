@@ -21,3 +21,4 @@ net:
   linear3_size: 256
   output_size: 102
   dropout_size: 0.2
+  freeze: true

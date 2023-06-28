@@ -10,13 +10,18 @@ class InsectPestClassifier(nn.Module):
             linear2_size: int = 512,
             linear3_size: int = 256,
             output_size: int = 102,
-            dropout_size: float = 0.2
+            dropout_size: float = 0.2,
+            freeze: bool = True
+
         ):
         super().__init__()
 
         self.mobilenet = mobilenetV2(pretrained=True)
         
-        self.freeze()
+        if freeze:
+            self.freeze()
+        else:
+            self.unfreeze()
         
         self.mobilenet.classifier = nn.Sequential(
             nn.Linear(input_size, linear1_size),

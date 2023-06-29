@@ -1236,7 +1236,7 @@ ______________________________________________________________________
 
 </div>
 
-This repository contains the official implementation of a large-scale pest classification system based on the paper titled ["Large scale pest classification using efficient Convolutional Neural Network with augmentation and regularizers"](https://www.sciencedirect.com/science/article/abs/pii/S0168169922005191) by Setiawan et al. The system utilizes efficient convolutional neural networks (CNNs) along with data augmentation and regularizers to classify images of pests into different categories.
+This repository contains the official implementation of a large-scale pest classification system based on the paper titled "[Large scale pest classification using efficient Convolutional Neural Network with augmentation and regularizers](https://www.sciencedirect.com/science/article/abs/pii/S0168169922005191)" by Setiawan et al. The system utilizes efficient convolutional neural networks (CNNs) along with data augmentation and regularizers to classify images of pests into different categories.
 
 ## Description
 
@@ -1244,7 +1244,9 @@ Insect pest classification plays a crucial role in various domains, including ag
 
 Automated insect pest classification systems leveraging deep learning techniques offer a promising solution to this problem. By utilizing Convolutional Neural Networks (CNNs) and advanced image processing algorithms, these systems can effectively distinguish and categorize insect pests based on their visual characteristics. Such systems enable researchers, farmers, and pest control professionals to quickly identify pests, understand their behavior, and implement targeted control measures.
 
-The implementation presented in this repository aims to provide a practical and efficient solution for large-scale insect pest classification. By leveraging an efficient CNN architecture along with augmentation techniques and regularizers. This repository serves as a valuable resource for researchers, practitioners, and enthusiasts seeking to apply insect pest classification in their work, contributing to improved pest management strategies, ecosystem monitoring, and sustainable agricultural practices. 
+The implementation presented in this repository aims to provide a practical and efficient solution for large-scale insect pest classification. By leveraging an efficient CNN architecture along with augmentation techniques and regularizers, this implementation serves as a valuable resource for academic and research purposes. It can assist researchers, practitioners, and enthusiasts in exploring and advancing the field of insect pest classification, contributing to improved pest management strategies, ecosystem monitoring, and sustainable agricultural practices.
+
+Please note that this implementation is intended for academic and research purposes only. It serves as a foundation for further studies and experimentation in insect pest classification. It is important to consider the specific requirements and limitations of practical applications before directly implementing this code in operational systems. 
 
 ## Installation
 

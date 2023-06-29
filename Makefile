@@ -35,5 +35,5 @@ test-full: ## Run all tests
 # 		logger=wandb \
 # 		logger.wandb.id=b49b9fpd
 train: 
-	python src/train.py trainer=gpu model.net.freeze=true
+	python src/train.py trainer=gpu model.net.freeze=true logger=wandb
 	

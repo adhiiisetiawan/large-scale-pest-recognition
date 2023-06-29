@@ -1236,9 +1236,15 @@ ______________________________________________________________________
 
 </div>
 
+This repository contains the official implementation of a large-scale pest classification system based on the paper titled ["Large scale pest classification using efficient Convolutional Neural Network with augmentation and regularizers"](https://www.sciencedirect.com/science/article/abs/pii/S0168169922005191) by Setiawan et al. The system utilizes efficient convolutional neural networks (CNNs) along with data augmentation and regularizers to classify images of pests into different categories.
+
 ## Description
 
-What it does
+Insect pest classification plays a crucial role in various domains, including agriculture, pest control, and ecological research. Rapid and accurate identification of insect pests is essential for effective pest management strategies, early detection of invasive species, and preservation of crop yield and quality. However, manual classification of insects based on visual inspection can be time-consuming, error-prone, and challenging, particularly when dealing with large-scale datasets.
+
+Automated insect pest classification systems leveraging deep learning techniques offer a promising solution to this problem. By utilizing Convolutional Neural Networks (CNNs) and advanced image processing algorithms, these systems can effectively distinguish and categorize insect pests based on their visual characteristics. Such systems enable researchers, farmers, and pest control professionals to quickly identify pests, understand their behavior, and implement targeted control measures.
+
+The implementation presented in this repository aims to provide a practical and efficient solution for large-scale insect pest classification. By leveraging an efficient CNN architecture along with augmentation techniques and regularizers. This repository serves as a valuable resource for researchers, practitioners, and enthusiasts seeking to apply insect pest classification in their work, contributing to improved pest management strategies, ecosystem monitoring, and sustainable agricultural practices. 
 
 ## Installation
 

@@ -16,7 +16,7 @@
 <br>
 <br>
 
-This repository contains the official implementation of a large-scale pest classification system based on the paper titled "[Large scale pest classification using efficient Convolutional Neural Network with augmentation and regularizers](https://www.sciencedirect.com/science/article/abs/pii/S0168169922005191)" by Setiawan et al. The system utilizes efficient convolutional neural networks (CNNs) along with data augmentation and regularizers to classify images of pests into different categories.
+This repository contains the official implementation of a large-scale pest classification system based on our research paper titled "[Large scale pest classification using efficient Convolutional Neural Network with augmentation and regularizers](https://www.sciencedirect.com/science/article/abs/pii/S0168169922005191)". The system utilizes efficient convolutional neural networks (CNNs) along with data augmentation and regularizers to classify images of pests into different categories.
 
 
 ## Description

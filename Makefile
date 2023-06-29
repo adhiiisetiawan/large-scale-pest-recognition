@@ -26,5 +26,14 @@ test: ## Run not slow tests
 test-full: ## Run all tests
 	pytest
 
-train: ## Train the model
-	python src/train.py trainer=gpu logger=wandb
+
+## Train the model, use `trainer=cpu` if use cpu, `model.net.freeze=false` if you want to unfreeze all layer. `logger=wandb` to use wandb as logging
+# python src/train.py \
+# 		ckpt_path='./logs/train/runs/2023-06-28_23-10-21/checkpoints/epoch_009.ckpt' \
+# 		trainer=gpu \
+# 		model.net.freeze=false \
+# 		logger=wandb \
+# 		logger.wandb.id=b49b9fpd
+train: 
+	python src/train.py trainer=gpu model.net.freeze=true logger=wandb
+	

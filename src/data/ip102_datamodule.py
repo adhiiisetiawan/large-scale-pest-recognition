@@ -1,7 +1,9 @@
 from typing import Any, Dict, Optional
 
 import os
-# from components.dataset_manager import DatasetManager
+import shutil
+import tarfile
+from .components.dataset_manager import DatasetManager
 from lightning import LightningDataModule
 from torch.utils.data import DataLoader, Dataset
 from torchvision import datasets, transforms
@@ -77,37 +79,54 @@ class IP102DataModule(LightningDataModule):
     def num_classes(self):
         return 102
 
-    # def prepare_data(self):
-    #     """Prepares the dataset by initializing and managing the dataset, creating necessary folders,
-    #     loading class labels, creating subfolders for each class, and moving files to their respective subfolders.
+    def prepare_data(self):
+        """Prepares the dataset by initializing and managing the dataset, creating necessary folders,
+        loading class labels, creating subfolders for each class, and moving files to their respective subfolders.
 
-    #     Args:
-    #         self: The instance of the class.
+        Args:
+            self: The instance of the class.
 
-    #     Returns:
-    #         None
-    #     """
+        Returns:
+            None
+        """
 
-    #     # Directory path for the dataset
-    #     dataset_path = self.data_dir
+        # Directory path for the dataset
+        dataset_path = self.data_dir
 
-    #     # Initialize and manage the dataset
-    #     dataset_manager = DatasetManager(dataset_path)
+        # path for checking dataset
+        check_path = f"{self.data_dir}images/train"
 
-    #     # Create necessary folders
-    #     dataset_manager.create_folders()
+        # check if dataset already exist
+        if not os.path.exists(check_path):
 
-    #     # Load class labels
-    #     classes_file = os.path.join(dataset_path, "classes.txt")
-    #     dataset_manager.load_class_labels(classes_file)
+            # extract dataset
+            tar_dir = os.path.dirname(dataset_path)
+            tar_dir = tar_dir[:tar_dir.rfind('/') + 1]
+            tar = tarfile.open(f"{tar_dir}Copyofip102_v1.1.tar")
+            tar.extractall(tar_dir)
 
-    #     # Create subfolders for each class
-    #     dataset_manager.create_class_subfolders()
+            # copy class
+            source_file = os.path.join(tar_dir, "classes.txt")
+            destination_file = os.path.join(dataset_path, "classes.txt")
+            shutil.copyfile(source_file, destination_file)
 
-    #     # Move files to respective subfolders
-    #     dataset_manager.move_files("train.txt")
-    #     dataset_manager.move_files("test.txt")
-    #     dataset_manager.move_files("val.txt")
+            # Initialize and manage the dataset
+            dataset_manager = DatasetManager(dataset_path)
+
+            # Create necessary folders
+            dataset_manager.create_folders()
+
+            # Load class labels
+            classes_file = os.path.join(dataset_path, "classes.txt")
+            dataset_manager.load_class_labels(classes_file)
+
+            # Create subfolders for each class
+            dataset_manager.create_class_subfolders()
+
+            # Move files to respective subfolders
+            dataset_manager.move_files("train.txt")
+            dataset_manager.move_files("test.txt")
+            dataset_manager.move_files("val.txt")
 
 
     def setup(self, stage=None):
@@ -124,9 +143,9 @@ class IP102DataModule(LightningDataModule):
         """
 
         # load and split datasets only if not loaded already
-        self.data_train = datasets.ImageFolder('data/ip102_v1.1/images/train', transform=self.augmentation)
-        self.data_val = datasets.ImageFolder('data/ip102_v1.1/images/val', transform=self.transforms)
-        self.data_test = datasets.ImageFolder('data/ip102_v1.1/images/test', transform=self.transforms)
+        self.data_train = datasets.ImageFolder(f'{self.data_dir}images/train', transform=self.augmentation)
+        self.data_val = datasets.ImageFolder(f'{self.data_dir}images/val', transform=self.transforms)
+        self.data_test = datasets.ImageFolder(f'{self.data_dir}images/test', transform=self.transforms)
 
     def train_dataloader(self):
         """Returns a DataLoader for the training dataset.

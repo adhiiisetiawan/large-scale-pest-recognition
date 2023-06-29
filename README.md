@@ -91,8 +91,6 @@ The directory structure of new project looks like this:
 ├── setup.py                  <- File for installing project as a package
 └── README.md
 ```
-
-<br>
  
 ## Installation
 

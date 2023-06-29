@@ -1,5 +1,5 @@
 _target_: src.data.ip102_datamodule.IP102DataModule
-data_dir: ${paths.data_dir}
+data_dir: ${paths.data_dir}ip102_v1.1/
 batch_size: 32
 num_workers: 16
 pin_memory: False

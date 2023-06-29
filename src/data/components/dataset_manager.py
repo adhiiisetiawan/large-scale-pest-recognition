@@ -1,6 +1,7 @@
 import os
 import re
 import shutil
+from rich.progress import track
 
 class DatasetManager:
     def __init__(self, dataset_path):
@@ -42,7 +43,7 @@ class DatasetManager:
             destination_path = self.test_path
         
         with open(file_path, "r") as file:
-            for line in file:
+            for line in track(file, description="Extracting dataset ..."):
                 data = line.strip().split(" ")
                 if len(data) == 2:
                     image_name, class_label = data

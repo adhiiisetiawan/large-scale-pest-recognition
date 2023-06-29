@@ -1,6 +1,8 @@
 from typing import Any, Dict, Optional
 
 import os
+import shutil
+import tarfile
 from .components.dataset_manager import DatasetManager
 from lightning import LightningDataModule
 from torch.utils.data import DataLoader, Dataset
@@ -96,6 +98,18 @@ class IP102DataModule(LightningDataModule):
 
         # check if dataset already exist
         if not os.path.exists(check_path):
+
+            # extract dataset
+            tar_dir = os.path.dirname(dataset_path)
+            tar_dir = tar_dir[:tar_dir.rfind('/') + 1]
+            tar = tarfile.open(f"{tar_dir}Copyofip102_v1.1.tar")
+            tar.extractall(tar_dir)
+
+            # copy class
+            source_file = os.path.join(tar_dir, "classes.txt")
+            destination_file = os.path.join(dataset_path, "classes.txt")
+            shutil.copyfile(source_file, destination_file)
+
             # Initialize and manage the dataset
             dataset_manager = DatasetManager(dataset_path)
 

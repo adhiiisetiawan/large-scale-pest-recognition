@@ -1366,32 +1366,34 @@ By following this two-step training pipeline, the model benefits from the transf
 To run the repository and utilize the pipeline as implemented in the paper, please follow these instructions:
 1. Open the Makefile provided in the repository.
 2. Locate the train target within the Makefile. You will find the following command:
-```bash
-train: 
- python src/train.py trainer=gpu model.net.freeze=true logger=wandb
-```
-This command trains the model with the GPU trainer, freezing all convolutional layers, and using wandb as the logger. Modify the command based on your requirements. For example, if you want to use the CPU trainer, change with `trainer=cpu`. If you not plan using wandb logger, feel free to delete it. But default implementation using wandb as logger.
+   ```bash
+   train: 
+    python src/train.py trainer=gpu model.net.freeze=true logger=wandb
+   ```
+   This command trains the model with the GPU trainer, freezing all convolutional layers, and using wandb as the logger. Modify the command based on your requirements. For example, if you want to use the CPU trainer, change with `trainer=cpu`. If you not plan using wandb logger, feel free to delete it. But default implementation using wandb as logger.
 
 3. To start training, simply just type `make train` in root project and training will start automatically from data preparation until training done.
+4. After training step 1 is done, you can continue to step 2, which is fine tuning with unfreeze all parameters. Change the Makefile like this.
+   ```bash
+   train: 
+    python src/train.py \
+     ckpt_path='./logs/train/runs/2023-06-28_23-10-21/checkpoints/epoch_009.ckpt' \
+     trainer=gpu \
+     model.net.freeze=false \
+     logger=wandb \
+     logger.wandb.id=b49b9fpd
+   ```
+   - `ckpt_path='./logs/train/runs/2023-06-28_23-10-21/checkpoints/epoch_009.ckpt'`: This parameter specifies the path to the checkpoint file of the model. Checkpoints are saved weights and parameters of the model at a specific epoch during training. By loading a specific checkpoint, you can resume training from that point or use it for evaluation. This should **change** with specific location in your case.
+   - `trainer=gpu`: This parameter indicates the use of GPU for training. By utilizing GPU acceleration, the training process can be significantly faster compared to using the CPU.
+   - `model.net.freeze=false`: This parameter unfreezes all layers of the model. In step 1, the convolutional layers were frozen, but now all layers, including the convolutional layers, will be trainable. This allows the model to update the weights and adapt to the pest classification task by fine-tuning its parameters.
+   - `logger=wandb`: This parameter sets the logger to use WandB for logging the training process. WandB (Weights & Biases) is a platform that provides tools for visualizing and tracking experiments. It allows you to monitor various metrics, visualize training progress, and compare different runs.
+   - `logger.wandb.id=b49b9fpd`: This parameter specifies the unique identifier (ID) for the WandB run. It helps to associate the training run with a specific experiment or configuration in the WandB platform, also the logger can continue from previous training in step 1. Making it easier to track and analyze the results. The wandb id should change with your wandb run id like in step 1.
 
-Train model with default configuration
+**Note:** It is possible to run the command without the Makefile if you prefer. However, it can become slightly cumbersome when dealing with multiple arguments, as in step 2. The Makefile simplifies the process and makes it easier to handle.
 
-```bash
-# train on CPU
-python src/train.py trainer=cpu
+## Result
+The results obtained from running the pest classification system can be found in the paper "[Large scale pest classification using efficient Convolutional Neural Network with augmentation and regularizers](https://www.sciencedirect.com/science/article/abs/pii/S0168169922005191)". The paper presents comprehensive analyses of the experimental results, including performance comparisons and discussions.
 
-# train on GPU
-python src/train.py trainer=gpu
-```
+## License
+This project is licensed under the MIT License. Feel free to use and modify the code for your purposes. However, please note that this repository does not provide any licenses or permissions for the dataset used in the project. Ensure that you comply with the terms and conditions of the dataset you use.
 
-Train model with chosen experiment configuration from [configs/experiment/](configs/experiment/)
-
-```bash
-python src/train.py experiment=experiment_name.yaml
-```
-
-You can override any parameter from command line like this
-
-```bash
-python src/train.py trainer.max_epochs=20 data.batch_size=64
-```

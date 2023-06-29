@@ -3,7 +3,7 @@ _target_: src.models.insect_pest_module.InsectPestLitModule
 optimizer:
   _target_: torch.optim.Adam
   _partial_: true
-  lr: 0.001
+  lr: 0.0001
   weight_decay: 0.0
 
 scheduler:
@@ -11,7 +11,7 @@ scheduler:
   _partial_: true
   mode: min
   factor: 0.1
-  patience: 10
+  patience: 5
 
 net:
   _target_: src.models.components.insect_pest_net.InsectPestClassifier

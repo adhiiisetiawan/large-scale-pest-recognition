@@ -18,6 +18,7 @@
 
 This repository contains the official implementation of a large-scale pest classification system based on the paper titled "[Large scale pest classification using efficient Convolutional Neural Network with augmentation and regularizers](https://www.sciencedirect.com/science/article/abs/pii/S0168169922005191)" by Setiawan et al. The system utilizes efficient convolutional neural networks (CNNs) along with data augmentation and regularizers to classify images of pests into different categories.
 
+
 ## Description
 
 Insect pest classification plays a crucial role in various domains, including agriculture, pest control, and ecological research. Rapid and accurate identification of insect pests is essential for effective pest management strategies, early detection of invasive species, and preservation of crop yield and quality. However, manual classification of insects based on visual inspection can be time-consuming, error-prone, and challenging, particularly when dealing with large-scale datasets.
@@ -142,7 +143,7 @@ By following this two-step training pipeline, the model benefits from the transf
 
 ---
 To run the repository and utilize the pipeline as implemented in the paper, please follow these instructions:
-1. Open the Makefile provided in the repository.
+1. Open the [Makefile](https://github.com/adhiiisetiawan/large-scale-pest-classification/blob/main/Makefile) provided in the repository.
 2. Locate the train target within the Makefile. You will find the following command:
    ```bash
    train: 

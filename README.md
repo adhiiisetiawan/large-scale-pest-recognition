@@ -1395,5 +1395,11 @@ To run the repository and utilize the pipeline as implemented in the paper, plea
 The results obtained from running the pest classification system can be found in the paper "[Large scale pest classification using efficient Convolutional Neural Network with augmentation and regularizers](https://www.sciencedirect.com/science/article/abs/pii/S0168169922005191)". The paper presents comprehensive analyses of the experimental results, including performance comparisons and discussions.
 
 ## License
-This project is licensed under the MIT License. Feel free to use and modify the code for your purposes. However, please note that this repository does not provide any licenses or permissions for the dataset used in the project. Ensure that you comply with the terms and conditions of the dataset you use.
+This project is licensed under the [MIT License](https://github.com/adhiiisetiawan/large-scale-pest-classification/blob/main/LICENSE), please read carefully about this license on `LICENSE` file. Feel free to use and modify the code for your purposes. However, please note that this repository does not provide any licenses or permissions for the dataset used in the project. Ensure that you comply with the terms and conditions of the dataset you use.
 
+## Acknowledgments
+We would like to express our sincere gratitude to the following individuals and resources for their valuable contributions to this project:
+- Wu, X., Zhan, C., Lai, Y.K., Cheng, M.M. and Yang, J. for providing the IP102 dataset used in our research. The dataset, introduced in their paper titled "IP102: A Large-Scale Benchmark Dataset for Insect Pest Recognition" [1], has been instrumental in training and evaluating our insect pest classification model.
+- The contributors of the [lightning-hydra-template](https://github.com/ashleve/lightning-hydra-template/) repository, which served as the foundation for our project. The project template's well-organized structure and modularity significantly expedited our development process and allowed us to focus on the core aspects of our research.
+
+[1] Wu, X., Zhan, C., Lai, Y.K., Cheng, M.M. and Yang, J., 2019. IP102: A Large-Scale Nenchmark Dataset for Insect Pest Recognition. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition (pp. 8787-8796).

@@ -1403,3 +1403,17 @@ We would like to express our sincere gratitude to the following individuals and 
 - The contributors of the [lightning-hydra-template](https://github.com/ashleve/lightning-hydra-template/) repository, which served as the foundation for our project. The project template's well-organized structure and modularity significantly expedited our development process and allowed us to focus on the core aspects of our research.
 
 [1] Wu, X., Zhan, C., Lai, Y.K., Cheng, M.M. and Yang, J., 2019. IP102: A Large-Scale Nenchmark Dataset for Insect Pest Recognition. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition (pp. 8787-8796).
+
+## Citation 
+If you find this code implementation or the accompanying paper useful in your research, please consider citing our work:
+```
+@article{setiawan2022large,
+  title={Large scale pest classification using efficient Convolutional Neural Network with augmentation and regularizers},
+  author={Setiawan, Adhi and Yudistira, Novanto and Wihandika, Randy Cahya},
+  journal={Computers and Electronics in Agriculture},
+  volume={200},
+  pages={107204},
+  year={2022},
+  publisher={Elsevier}
+}
+```

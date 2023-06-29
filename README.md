@@ -1248,38 +1248,50 @@ The implementation presented in this repository aims to provide a practical and 
 
 Please note that this implementation is intended for academic and research purposes only. It serves as a foundation for further studies and experimentation in insect pest classification. It is important to consider the specific requirements and limitations of practical applications before directly implementing this code in operational systems. 
 
+## Dataset
+The pest classification system relies on the IP102 dataset, a large-scale benchmark dataset specifically designed for insect pest recognition. The IP102 dataset is introduced in the paper "[IP102: A Large-Scale Benchmark Dataset for Insect Pest Recognition](https://ieeexplore.ieee.org/document/8954351)" presented at CVPR 2019 by Wu et al. The IP102 dataset contains a diverse collection of insect pest images with detailed annotations. It covers 102 categories of insect pests commonly found in agricultural and natural environments. The dataset provides a comprehensive representation of different pest species, including various insects and pests that impact crops, forests, and ecosystems.
+
+To obtain the IP102 dataset, please follow these steps:
+1. Visit the IP102 dataset repository on GitHub: [IP102 Dataset Repository](https://github.com/xpwu95/IP102)
+2. Follow the instructions provided in the repository to download the dataset. You may need to agree to the dataset license terms and conditions.
+3. Choose classification dataset, once you have downloaded the IP102 dataset, move the .tar file and classes.txt to `data/` folder in this repository. Preprocessing the dataset will be done in training pipeline.
+
+Using the IP102 dataset, the pest classification system presented in this repository can effectively learn to recognize and classify insect pests, enabling accurate pest identification and supporting various applications in agriculture and pest control.
+ 
 ## Installation
 
-#### Pip
+#### Pip (Recommended)
 
 ```bash
 # clone project
-git clone https://github.com/YourGithubName/your-repo-name
-cd your-repo-name
+git clone https://github.com/adhiiisetiawan/large-scale-pest-classification
+cd large-scale-pest-classification
 
-# [OPTIONAL] create conda environment
-conda create -n myenv python=3.9
-conda activate myenv
+# create virtual environment
+python3 -m venv [your-environment-name]
 
-# install pytorch according to instructions
+# activate environment
+source [your-environment-name]/bin/activate
+
+# install pytorch according to instructions, choose pytorch with GPU if you have a GPU in your machine
 # https://pytorch.org/get-started/
 
 # install requirements
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 #### Conda
 
 ```bash
 # clone project
-git clone https://github.com/YourGithubName/your-repo-name
-cd your-repo-name
+git clone https://github.com/adhiiisetiawan/large-scale-pest-classification
+cd large-scale-pest-classification
 
 # create conda environment and install dependencies
-conda env create -f environment.yaml -n myenv
+conda env create -f environment.yaml -n [your-environment-name]
 
 # activate conda environment
-conda activate myenv
+conda activate [your-environment-name]
 ```
 
 ## How to run

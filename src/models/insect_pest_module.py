@@ -3,12 +3,14 @@ from typing import Any
 import torch
 from .components.cutmix import cutmix
 from .components.sparse_regularization import sparse_loss
-from lightning import LightningModule
+from .components.insect_pest_net import InsectPestClassifier
+# from lightning import LightningModule
+import lightning.pytorch as pl
 from torchmetrics import MaxMetric, MeanMetric
 from torchmetrics.classification.accuracy import Accuracy
 
 
-class InsectPestLitModule(LightningModule):
+class InsectPestLitModule(pl.LightningModule):
     """Example of LightningModule for MNIST classification.
 
     A LightningModule organizes your PyTorch code into 6 sections:
@@ -25,9 +27,9 @@ class InsectPestLitModule(LightningModule):
 
     def __init__(
         self,
-        net: torch.nn.Module,
-        optimizer: torch.optim.Optimizer,
-        scheduler: torch.optim.lr_scheduler,
+        net: torch.nn.Module = InsectPestClassifier(),
+        optimizer: torch.optim.Optimizer = torch.optim.Adam,
+        scheduler: torch.optim.lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau,
         num_classes: int = 102,
     ):
         super().__init__()

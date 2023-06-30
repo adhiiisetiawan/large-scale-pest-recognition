@@ -27,13 +27,17 @@ class InsectPestLitModule(pl.LightningModule):
 
     def __init__(
         self,
-        net: torch.nn.Module = InsectPestClassifier(),
+        net: torch.nn.Module = None,
         optimizer: torch.optim.Optimizer = torch.optim.Adam,
         scheduler: torch.optim.lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau,
         num_classes: int = 102,
+        freeze: bool = True,
     ):
         super().__init__()
 
+        if net is None:
+            net = InsectPestClassifier(output_size=num_classes, freeze=freeze)
+            
         # this line allows to access init params with 'self.hparams' attribute
         # also ensures init params will be stored in ckpt
         self.save_hyperparameters(logger=False)

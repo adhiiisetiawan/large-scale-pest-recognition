@@ -41,7 +41,10 @@ class IP102DataModule(LightningDataModule):
 
     def __init__(
         self,
-        data_dir: str = "data/ip102_v1.1/",
+        data_dir: Optional[str] = None,
+        train_dir: str = "data/ip102_v1.1/images/train",
+        val_dir: str = "data/ip102_v1.1/images/val",
+        test_dir: str = "data/ip102_v1.1/images/test",
         batch_size: int = 64,
         num_workers: int = 16,
         pin_memory: bool = False,
@@ -53,6 +56,9 @@ class IP102DataModule(LightningDataModule):
         self.save_hyperparameters(logger=False)
 
         self.data_dir = data_dir
+        self.train_dir = train_dir
+        self.val_dir = val_dir
+        self.test_dir = test_dir
 
         # data augmentation
         self.augmentation = transforms.Compose([
@@ -143,9 +149,9 @@ class IP102DataModule(LightningDataModule):
         """
 
         # load and split datasets only if not loaded already
-        self.data_train = datasets.ImageFolder(f'{self.data_dir}images/train', transform=self.augmentation)
-        self.data_val = datasets.ImageFolder(f'{self.data_dir}images/val', transform=self.transforms)
-        self.data_test = datasets.ImageFolder(f'{self.data_dir}images/test', transform=self.transforms)
+        self.data_train = datasets.ImageFolder(self.train_dir, transform=self.augmentation)
+        self.data_val = datasets.ImageFolder(self.val_dir, transform=self.transforms)
+        self.data_test = datasets.ImageFolder(self.test_dir, transform=self.transforms)
 
     def train_dataloader(self):
         """Returns a DataLoader for the training dataset.

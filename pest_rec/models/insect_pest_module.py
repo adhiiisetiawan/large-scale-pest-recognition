@@ -3,12 +3,14 @@ from typing import Any
 import torch
 from .components.cutmix import cutmix
 from .components.sparse_regularization import sparse_loss
-from lightning import LightningModule
+from .components.insect_pest_net import InsectPestClassifier
+# from lightning import LightningModule
+import lightning.pytorch as pl
 from torchmetrics import MaxMetric, MeanMetric
 from torchmetrics.classification.accuracy import Accuracy
 
 
-class InsectPestLitModule(LightningModule):
+class InsectPestLitModule(pl.LightningModule):
     """Example of LightningModule for MNIST classification.
 
     A LightningModule organizes your PyTorch code into 6 sections:
@@ -25,13 +27,17 @@ class InsectPestLitModule(LightningModule):
 
     def __init__(
         self,
-        net: torch.nn.Module,
-        optimizer: torch.optim.Optimizer,
-        scheduler: torch.optim.lr_scheduler,
+        net: torch.nn.Module = None,
+        optimizer: torch.optim.Optimizer = torch.optim.Adam,
+        scheduler: torch.optim.lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau,
         num_classes: int = 102,
+        freeze: bool = True,
     ):
         super().__init__()
 
+        if net is None:
+            net = InsectPestClassifier(output_size=num_classes, freeze=freeze)
+            
         # this line allows to access init params with 'self.hparams' attribute
         # also ensures init params will be stored in ckpt
         self.save_hyperparameters(logger=False)

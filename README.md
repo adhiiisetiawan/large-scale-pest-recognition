@@ -130,7 +130,7 @@ conda env create -f environment.yaml -n [your-environment-name]
 conda activate [your-environment-name]
 ```
 
-## How to run training with script
+### How to run training with script
 
 The training pipeline implemented in the paper consists of two steps:
 
@@ -185,7 +185,7 @@ cd large-scale-pest-recognition
 pip install -e .
 ```
 
-## How to run training with package
+### How to run training with package
 If you have already installed the package, you can use the installed package for quick and easy execution. Here's how to run the pest recognition system using the installed package:
 ```python
 import lightning.pytorch as pl

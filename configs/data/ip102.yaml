@@ -1,4 +1,4 @@
-_target_: src.data.ip102_datamodule.IP102DataModule
+_target_: pest_rec.data.ip102_datamodule.IP102DataModule
 data_dir: ${paths.data_dir}ip102_v1.1/
 train_dir: ${paths.data_dir}ip102_v1.1/images/train/
 val_dir: ${paths.data_dir}ip102_v1.1/images/val/

@@ -4,7 +4,7 @@ from typing import Callable
 
 from omegaconf import DictConfig
 
-from src.utils import pylogger, rich_utils
+from pest_rec.utils import pylogger, rich_utils
 
 log = pylogger.get_pylogger(__name__)
 

@@ -8,7 +8,9 @@
 [![hydra](https://img.shields.io/badge/Config-Hydra_1.3-89b8cd)](https://hydra.cc/)
 <a href="https://github.com/ashleve/lightning-hydra-template"><img alt="Template" src="https://img.shields.io/badge/-Lightning--Hydra--Template-017F2F?style=flat&logo=github&labelColor=gray"></a><br>
 [![license](https://img.shields.io/badge/License-MIT-green.svg?labelColor=gray)](https://github.com/ashleve/lightning-hydra-template#license)
-[![Paper](https://img.shields.io/badge/Paper_Publisher-Elsevier-orange)](https://www.sciencedirect.com/science/article/abs/pii/S0168169922005191)
+
+[![
+Paper](https://img.shields.io/badge/Paper_Publisher-Elsevier-orange)](https://www.sciencedirect.com/science/article/abs/pii/S0168169922005191)
 [![Journal](http://img.shields.io/badge/Journal-Computers_&_Electronics_In_Agriculture-blue)](https://www.sciencedirect.com/journal/computers-and-electronics-in-agriculture/vol/200/suppl/C)
 
 </div>
@@ -67,8 +69,6 @@ The directory structure of new project looks like this:
 │
 ├── notebooks              <- Jupyter notebooks, if exist. 
 │
-├── scripts                <- Shell scripts
-│
 ├── pest_rec               <- Source code
 │   ├── data                     <- Data scripts
 │   ├── models                   <- Model scripts
@@ -76,6 +76,8 @@ The directory structure of new project looks like this:
 │   │
 │   ├── eval.py                  <- Run evaluation
 │   └── train.py                 <- Run training
+│
+├── scripts                <- Shell scripts
 │
 ├── tests                  <- Tests of any kind
 │

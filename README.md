@@ -95,12 +95,15 @@ The directory structure of new project looks like this:
  
 ## Installation
 
+We provide training from both a script and a package. Training from a package makes it easier to implement on different datasets without the need to modify or struggle with the code within the training framework. However, it less customization options. On the other hand, training from a script is highly customizable but requires more effort to make changes based on your specific use case. In this approach, you would need to delve into the code and manually customize it to fit your needs.
+
+### Training from Script
 #### Pip (Recommended)
 
 ```bash
 # clone project
-git clone https://github.com/adhiiisetiawan/large-scale-pest-classification
-cd large-scale-pest-classification
+git clone https://github.com/adhiiisetiawan/large-scale-pest-recognition
+cd large-scale-pest-recognition
 
 # create virtual environment
 python3 -m venv [your-environment-name]
@@ -119,8 +122,8 @@ pip3 install -r requirements.txt
 
 ```bash
 # clone project
-git clone https://github.com/adhiiisetiawan/large-scale-pest-classification
-cd large-scale-pest-classification
+git clone https://github.com/adhiiisetiawan/large-scale-pest-recognition
+cd large-scale-pest-recognition
 
 # create conda environment and install dependencies
 conda env create -f environment.yaml -n [your-environment-name]
@@ -129,7 +132,7 @@ conda env create -f environment.yaml -n [your-environment-name]
 conda activate [your-environment-name]
 ```
 
-## How to run
+## How to run training with script
 
 The training pipeline implemented in the paper consists of two steps:
 
@@ -149,10 +152,13 @@ To run the repository and utilize the pipeline as implemented in the paper, plea
    train: 
     python src/train.py trainer=gpu model.net.freeze=true logger=wandb
    ```
-   This command trains the model with the GPU trainer, freezing all convolutional layers, and using wandb as the logger. Modify the command based on your requirements. For example, if you want to use the CPU trainer, change with `trainer=cpu`. If you not plan using wandb logger, feel free to delete it. But default implementation using wandb as logger.
+   - `trainer=gpu`: This parameter indicates the use of GPU for training. By utilizing GPU acceleration, the training process can be significantly faster compared to using the CPU.
+   - `model.net.freeze=true`: This parameter freezes all convolutional layers of the model. The frozen layers will utilize the pre-trained features and focus on fine-tuning the fully connected layers.
+   - `logger=wandb`: This parameter sets the logger to use WandB for logging the training process. WandB (Weights & Biases) is a platform that provides tools for visualizing and tracking experiments. It allows you to monitor various metrics, visualize training progress, and compare different runs.<br><br>
+   **Note**: You can modify the command based on your specific requirements. For example, you can use trainer=cpu if you want to use the CPU trainer instead of the GPU trainer. If you don't plan to use WandB logger, you can omit the logger=wandb parameter.
 
-3. To start training, simply just type `make train` in root project and training will start automatically from data preparation until training done.
-4. After training step 1 is done, you can continue to step 2, which is fine tuning with unfreeze all parameters. Change the Makefile like this.
+4. To start training, simply just type `make train` in root project and training will start automatically from data preparation until training done.
+5. After training step 1 is done, you can continue to step 2, which is fine tuning with unfreeze all parameters. Change the Makefile like this.
    ```bash
    train: 
     python src/train.py \
@@ -169,6 +175,39 @@ To run the repository and utilize the pipeline as implemented in the paper, plea
    - `logger.wandb.id=b49b9fpd`: This parameter specifies the unique identifier (ID) for the WandB run. It helps to associate the training run with a specific experiment or configuration in the WandB platform, also the logger can continue from previous training in step 1. Making it easier to track and analyze the results. The wandb id should change with your wandb run id like in step 1.
 
 **Note:** It is possible to run the command without the Makefile if you prefer. However, it can become slightly cumbersome when dealing with multiple arguments, as in step 2. The Makefile simplifies the process and makes it easier to handle.
+
+### Training from Package
+#### Install this repository as package
+```bash
+# clone project
+git clone https://github.com/adhiiisetiawan/large-scale-pest-recognition
+cd large-scale-pest-recognition
+
+# install as package
+pip install -e .
+```
+
+## How to run training with package
+If you have already installed the package, you can use the installed package for quick and easy execution. Here's how to run the pest recognition system using the installed package:
+```python
+import lightning.pytorch as pl
+
+from src.data.ip102_datamodule import IP102DataModule
+from src.models.insect_pest_module import InsectPestLitModule
+
+
+datamodule = IP102DataModule(
+    train_dir='your-training-dir',
+    val_dir='your-validation-dir',
+    test_dir='your-testing-dir')
+datamodule.setup()
+
+model = InsectPestLitModule(num_classes=102, freeze=False)
+
+trainer = pl.Trainer(accelerator='gpu', devices=1, max_epochs=3)
+trainer.fit(model, train_dataloaders=datamodule.train_dataloader(), val_dataloaders=datamodule.val_dataloader())
+```
+
 
 ## Result
 The results obtained from running the pest classification system can be found in the paper "[Large scale pest classification using efficient Convolutional Neural Network with augmentation and regularizers](https://www.sciencedirect.com/science/article/abs/pii/S0168169922005191)". The paper presents comprehensive analyses of the experimental results, including performance comparisons and discussions.

@@ -108,7 +108,7 @@ class IP102DataModule(LightningDataModule):
             # extract dataset
             tar_dir = os.path.dirname(dataset_path)
             tar_dir = tar_dir[:tar_dir.rfind('/') + 1]
-            tar = tarfile.open(f"{tar_dir}Copyofip102_v1.1.tar")
+            tar = tarfile.open(f"{tar_dir}ip102_v1.1.tar")
             tar.extractall(tar_dir)
 
             # copy class

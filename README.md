@@ -5,7 +5,8 @@
 [![python](https://img.shields.io/badge/-Python_3.8_%7C_3.9_%7C_3.10-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![pytorch](https://img.shields.io/badge/PyTorch_2.0+-ee4c2c?logo=pytorch&logoColor=white)](https://pytorch.org/get-started/locally/)
 [![lightning](https://img.shields.io/badge/-Lightning_2.0+-792ee5?logo=pytorchlightning&logoColor=white)](https://pytorchlightning.ai/)
-[![hydra](https://img.shields.io/badge/Config-Hydra_1.3-89b8cd)](https://hydra.cc/)
+[![hydra](https://img.shields.io/badge/Config-Hydra_1.3-89b8cd)](https://hydra.cc/
+)
 <a href="https://github.com/ashleve/lightning-hydra-template"><img alt="Template" src="https://img.shields.io/badge/-Lightning--Hydra--Template-017F2F?style=flat&logo=github&labelColor=gray"></a><br>
 [![license](https://img.shields.io/badge/License-MIT-green.svg?labelColor=gray)](https://github.com/ashleve/lightning-hydra-template#license)
 [![Paper](https://img.shields.io/badge/Paper_Publisher-Elsevier-orange)](https://www.sciencedirect.com/science/article/abs/pii/S0168169922005191)
@@ -194,6 +195,19 @@ from pest_rec.data.ip102_datamodule import IP102DataModule
 from pest_rec.models.insect_pest_module import InsectPestLitModule
 
 
+"""
+train_dir, val_dir, and test_dir must have structure like this
+
+root
+├── label 1
+│   ├── xxx.jpg
+│   ├── xxy.png
+│   └── xxz.jpg
+└── label 2
+    ├── 123.png
+    ├── nsdf3.png
+    └── asd932_.jpg
+"""
 datamodule = IP102DataModule(
     train_dir='your-training-dir',
     val_dir='your-validation-dir',

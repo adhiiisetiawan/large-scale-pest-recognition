@@ -3,6 +3,36 @@ from torch import nn
 
 
 class InsectPestClassifier(nn.Module):
+    """
+    A classifier model based on MobileNetV2 architecture for insect pest recognition.
+
+    The InsectPestClassifier is a neural network model that utilizes MobileNetV2 as its base
+    feature extractor and adds additional fully connected layers for classification. The model
+    can be optionally frozen to prevent updating the weights of the base feature extractor during
+    training.
+
+    Args:
+        input_size (int, optional): The number of input features to the classifier. Default is 1280.
+        linear1_size (int, optional): The number of units in the first fully connected layer. Default is 1024.
+        linear2_size (int, optional): The number of units in the second fully connected layer. Default is 512.
+        linear3_size (int, optional): The number of units in the third fully connected layer. Default is 256.
+        output_size (int, optional): The number of output classes. Default is 102.
+        dropout_size (float, optional): The dropout probability for the fully connected layers. Default is 0.2.
+        freeze (bool, optional): Flag indicating whether to freeze the weights of the base feature extractor.
+            If True, the weights are frozen; if False, the weights are trainable. Default is True.
+
+    Attributes:
+        mobilenet (nn.Module): The MobileNetV2 base feature extractor.
+    
+    Methods:
+        forward(x: torch.Tensor) -> torch.Tensor:
+            Performs a forward pass through the network.
+        freeze():
+            Freezes the weights of the base feature extractor.
+        unfreeze():
+            Unfreezes the weights of the base feature extractor.
+    """
+    
     def __init__(
             self,
             input_size: int = 1280,

@@ -4,6 +4,31 @@ import shutil
 from rich.progress import track
 
 class DatasetManager:
+    """
+    Utility class for managing datasets by organizing and moving files into train, test, and validation folders.
+
+    Args:
+        dataset_path (str): The path to the dataset directory.
+
+    Attributes:
+        dataset_path (str): The path to the dataset directory.
+        train_path (str): The path to the train folder within the dataset.
+        test_path (str): The path to the test folder within the dataset.
+        val_path (str): The path to the validation folder within the dataset.
+        class_labels (list): A list of class labels.
+
+    Methods:
+        create_folders():
+            Creates the train, test, and validation folders if they don't exist.
+        load_class_labels(classes_file: str):
+            Loads the class labels from a file.
+        create_class_subfolders():
+            Creates subfolders within the train, test, and validation folders for each class label.
+        move_files(filename: str):
+            Moves the files from the source directory to their respective class subfolders.
+
+    """
+    
     def __init__(self, dataset_path):
         self.dataset_path = dataset_path
         self.train_path = os.path.join(f'{dataset_path}/images', 'train')
